@@ -7,7 +7,7 @@ function encrypt(message, key) {
   const cipher = CryptoJS.AES.encrypt(message, keyMd5, {
     iv,
     mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7
+    padding: CryptoJS.pad.ZeroPadding
   }).toString();
 
   const mac = CryptoJS.HmacSHA256(iv.toString(CryptoJS.enc.Base64) + cipher, keyMd5);
@@ -34,7 +34,7 @@ function decrypt(payload, key) {
   const cipher = CryptoJS.AES.decrypt(obj.value, keyMd5, {
     iv: CryptoJS.enc.Base64.parse(obj.iv),
     mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7
+    padding: CryptoJS.pad.ZeroPadding
   });
 
   return CryptoJS.enc.Utf8.stringify(cipher);
